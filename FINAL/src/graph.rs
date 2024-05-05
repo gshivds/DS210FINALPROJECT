@@ -1,7 +1,6 @@
-use std::collections::{HashMap, VecDeque};
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
-use rand::prelude::*;
 type Graph = HashMap<usize, Vec<usize>>;
 
 pub fn read_graph(filename: &str) -> Graph {

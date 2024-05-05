@@ -1,6 +1,4 @@
 use std::collections::{HashMap, VecDeque};
-use std::fs::File;
-use std::io::{BufRead, BufReader};
 use rand::prelude::*;
 type Graph = HashMap<usize, Vec<usize>>;
 
@@ -23,7 +21,7 @@ pub fn bfs_distance(graph: &Graph, start: usize) -> HashMap<usize, usize> {
     distances
 }
 
-pub fn print_bfs_from_every_node(graph: &Graph) {
+pub fn bfs_from_every_node(graph: &Graph) {
     for &node in graph.keys() {
         let distances = bfs_distance(graph, node);
         println!("Distances from node {} -> {:?}", node, distances);
@@ -37,7 +35,7 @@ pub fn calculate_average_distance(graph: &Graph) {
     let mut total_distance = 0.0;
     let mut count = 0.0;
 
-    for _ in 0..100 {
+    for _ in 0..3000 {
         let &start = node_keys.choose(&mut rng).unwrap();
         let distances = bfs_distance(graph, *start);
         for &distance in distances.values() {
@@ -53,7 +51,7 @@ pub fn get_num_vertices(graph: &Graph) -> usize {
     graph.len()
 }
 
-pub fn print_distance_statistics_from_each_node(graph: &Graph) {
+pub fn distance_statistics_for_each_node(graph: &Graph) {
     for &node in graph.keys() {
         let distances = bfs_distance(graph, node);
         let mut distance_counts = [0; 9]; // Indices 0-8 for distances 0-8
@@ -70,11 +68,12 @@ pub fn print_distance_statistics_from_each_node(graph: &Graph) {
     }
 }
 
-pub fn print_max_distance_counts(graph: &Graph) {
+pub fn max_distance_counts(graph: &Graph) {
     // Store max count and corresponding nodes for each distance 1 to 8
     let mut max_counts = vec![(0, Vec::new()); 8]; // (count, nodes)
     let mut total_counts = vec![0; 9]; // Index 0-8 for distances 0-8
-
+   
+   
     for &node in graph.keys() {
         let distances = bfs_distance(graph, node);
         let mut distance_counts = vec![0; 9]; // Index 0-8 for distances 0-8
@@ -102,11 +101,11 @@ pub fn print_max_distance_counts(graph: &Graph) {
         let max_count = max_counts[i].0;
         let total_count = total_counts[i + 1]; // distance 1 corresponds to index 1 in total_counts
         let frequency = if total_count != 0 { max_count as f64 / total_count as f64 } else { 0.0 };
-        println!("Distance {}: Max count = {}, Frequency = {}", i + 1, max_count, frequency);
+        println!("Distance {}: Max count = {}, Frequency = {}", i + 1, total_count, frequency);
     }
 }
 
-pub fn print_average_distances_nodes_count(graph: &Graph) {
+pub fn average_distances_nodes_count(graph: &Graph) {
     let max_distance = 8; // Calculate up to distance 8
     let mut total_counts = vec![0; max_distance + 1]; // Store total counts for each distance
     let mut node_counts = vec![0; max_distance + 1]; // Store number of nodes contributing to each distance
